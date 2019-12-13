@@ -1,11 +1,11 @@
-const express = require("express");
+import express from 'express';
 const router = express.Router();
-const getVkPeople = require('./pupeteer/pupeteer');
-
-/* GET home page. */
+import {
+  createPup
+} from './vk.com/vkpup';
 router.get("/", async (req, res, next) => {
-  const names = await getVkPeople();
-  console.log(names);
+  createPup();
+  console.log(1);
 });
 
 module.exports = router;
