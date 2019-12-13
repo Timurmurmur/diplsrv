@@ -1,4 +1,7 @@
-export const getVkPeople = async () => {
+const puppeteer = require("puppeteer");
+
+
+const getVkPeople = async () => {
     const browser = await puppeteer.launch({
         headless: false
     });
@@ -12,8 +15,7 @@ export const getVkPeople = async () => {
     const Names = await getNames(page);
     return Names;
 };
-
-export const login = async page => {
+const login = async page => {
     const login = "";
     const password = "";
     const LOGIN_SELECTOR = "#index_email";
@@ -28,21 +30,4 @@ export const login = async page => {
     await page.waitForNavigation();
 };
 
-export const getNames = async page => {
-    await page.goto("https://vk.com/im", {
-        waitUntil: "domcontentloaded"
-    });
-
-    const content = await page.content();
-    let $ = cheerio.load(content);
-    // tslint:disable-next-line: one-variable-per-declaration
-    let body = $(".nim-dialog--name-w");
-    let names = [];
-    return body.find("._im_dialog_link").map(function (index) {
-        return (names[index] = {
-            name: $(this)
-                .eq(0)
-                .text()
-        });
-    });
-};
+module.exports = getVkPeople;
