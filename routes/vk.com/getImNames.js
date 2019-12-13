@@ -19,5 +19,4 @@ export const getNames = async page => {
   });
 
   console.log(names);
-
 };
