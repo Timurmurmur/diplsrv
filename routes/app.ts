@@ -3,6 +3,14 @@ import { Request, Response } from "express";
 import { authFunc } from "./auth";
 const app = express();
 
+// app.use(checkVerif() => {
+// if( true ) {
+//  next()
+// } else if (false) {
+//  res.sendStatus(400) + message = "bad auth"
+//
+// }
+// })
 app.get("/", (req: Request, res: Response) => {
   res.setHeader("Content-Type", "text/plain");
   res.send("hello world");

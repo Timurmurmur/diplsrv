@@ -1,12 +1,21 @@
 import jwt from "jsonwebtoken";
 import { Request, Response } from "express";
 const request = {
-  token:
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImJhcnRAZ21haWwuY29tIiwicGFzcyI6IjEyMzQ1NjciLCJpYXQiOjE1NzYzNDg3OTgsImV4cCI6MTU3NjQzNTE5OH0.bdK_kBQmK6pWxPJEot1hDACNjrkf-ffBhXqzUDajMt4"
+  login: "bart@gmail.com",
+  pass: "1234567"
 };
 let secret = "euhrpgsiaogrgjajv[raog[oairgoaijgasohbguish";
 export const authFunc = (req: Request, res: Response) => {
-  jwt.verify(request.token, secret, (err, decoded) => {
+  let accesstoken = jwt.sign(
+    {
+      login: request.login,
+      pass: request.pass
+    },
+    secret,
+    { expiresIn: "1d", encoding: "utf8" }
+  );
+  console.log(accesstoken);
+  jwt.verify(accesstoken, secret, (err, decoded) => {
     if (err) console.log(err);
     console.log(decoded);
   });
