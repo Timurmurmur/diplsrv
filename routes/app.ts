@@ -1,29 +1,42 @@
 import express from "express";
 import { Request, Response } from "express";
-import { authFunc } from "./auth";
-import { dbFunc } from "./dbaseconnect";
+import { loginFunc } from "./auth/login";
+import { dbFunc } from "./models/dbaseconnect";
+import bodyParser from "body-parser";
+import { checkAccessToken } from "./controller/checkAccessToken";
+import { regFunc } from "./auth/reg";
+import fs from "fs";
 const app = express();
 
-dbFunc();
-// app.use(checkVerif() => {
-// if( true ) {
-//  next()
-// } else if (false) {
-//  res.sendStatus(400) + message = "bad auth"
-// }
-// })
+import cors from "cors";
+
+app.use(
+  cors({
+    allowedHeaders: ["sessionId", "Content-Type"],
+    exposedHeaders: ["sessionId"],
+    origin: "*",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    preflightContinue: false
+  })
+);
+app.use(bodyParser.json());
+app.use(
+  bodyParser.urlencoded({
+    extended: true
+  })
+);
+// const db = dbFunc();
 
 app.get("/", (req: Request, res: Response) => {
   res.setHeader("Content-Type", "text/plain");
   res.send("hello world");
-
   res.end();
 });
-app.get("/auth", (req: Request, res: Response) => {
-  authFunc(req, res);
-  res.header(req.headers);
-  res.sendStatus(200);
-  res.end();
+app.post("/auth", (req: Request, res: Response) => {
+  loginFunc(req, res);
+});
+app.post("/reg", (req: Request, res: Response) => {
+  regFunc(req, res);
 });
 
 app.listen(80);
