@@ -6,7 +6,6 @@ export const regFunc = (req: Request, res: Response) => {
 
   const pare = createJwtPare({ email, password });
 
-  console.log(pare);
-
   res.send(JSON.stringify({ pare }));
+  res.end();
 };
