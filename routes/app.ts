@@ -1,13 +1,11 @@
 import express from "express";
 import { Request, Response } from "express";
 import { loginFunc } from "./auth/login";
-import { dbFunc } from "./models/dbaseconnect";
+import { sequelize } from "./models/dbaseconnect";
 import bodyParser from "body-parser";
 import { checkAccessToken } from "./controller/checkAccessToken";
 import { regFunc } from "./auth/reg";
 import fs from "fs";
-const db = dbFunc();
-
 
 const app = express();
 
@@ -28,7 +26,6 @@ app.use(
     extended: true
   })
 );
-// const db = dbFunc();
 
 app.get("/", (req: Request, res: Response) => {
   res.setHeader("Content-Type", "text/plain");

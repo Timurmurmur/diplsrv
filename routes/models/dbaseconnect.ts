@@ -1,7 +1,6 @@
-import { Sequelize, Model } from "sequelize";
-import { User } from "./userModel";
+import { Sequelize } from "sequelize";
 
-export const dbFunc = () => {
+const dbInit = () => {
   const sequelize = new Sequelize(
     "mysql://b054d67a1d9d31:1e4a5b65@eu-cdbr-west-02.cleardb.net/heroku_6b4a499c8042da2?reconnect=true"
   );
@@ -16,3 +15,5 @@ export const dbFunc = () => {
 
   return sequelize;
 };
+
+export const sequelize = dbInit();
