@@ -39,4 +39,10 @@ app.post("/reg", (req: Request, res: Response) => {
   regFunc(req, res);
 });
 
+import { yandexSearch } from "./curl_test/curl";
+
+app.get("/yandex", (req: Request, res: Response) => {
+  yandexSearch(req, res);
+});
+
 app.listen(80);
