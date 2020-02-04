@@ -6,6 +6,9 @@ import bodyParser from "body-parser";
 import { checkAccessToken } from "./controller/checkAccessToken";
 import { regFunc } from "./auth/reg";
 import fs from "fs";
+const db = dbFunc();
+
+
 const app = express();
 
 import cors from "cors";
@@ -31,6 +34,7 @@ app.get("/", (req: Request, res: Response) => {
   res.setHeader("Content-Type", "text/plain");
   res.send("hello world");
   res.end();
+
 });
 app.post("/auth", (req: Request, res: Response) => {
   loginFunc(req, res);
@@ -42,7 +46,7 @@ app.post("/reg", (req: Request, res: Response) => {
 import { yandexSearch } from "./curl_test/curl";
 
 app.get("/yandex", (req: Request, res: Response) => {
-  yandexSearch(req, res);
+  yandexSearch(req, res, "ssl");
 });
 
 app.listen(80);

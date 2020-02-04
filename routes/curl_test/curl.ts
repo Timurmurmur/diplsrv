@@ -1,13 +1,25 @@
 import axios from "axios";
 import { Response, Request } from "express";
 import cheerio from "cheerio";
+import { cachedDataVersionTag } from "v8";
 
-export const yandexSearch = (req: Request, res: Response) => {
+const pushToDb = (links: any) => {
+  console.log(links);
+
+}
+
+
+export const yandexSearch = (req: Request, res: Response, word: string) => {
   let data = axios
     .get(
-      "https://yandex.ru/search/?lr=35&text=%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5"
+      `https://habr.com/ru/search/?q=${word}#h`
     )
     .then((data) => {
-      res.send(data.data)
+      var $ = cheerio.load(data.data);
+      var links: any[] = []
+      $('.post__title_link').each(function (i, elem) {
+        links.push($(elem).attr('href'));
+      });
+      pushToDb(links);
     });
 };
