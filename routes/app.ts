@@ -6,6 +6,7 @@ import bodyParser from "body-parser";
 import { checkAccessToken } from "./controller/checkAccessToken";
 import { regFunc } from "./auth/reg";
 import fs from "fs";
+import { Parse } from "./parse/parse";
 
 const app = express();
 
@@ -40,10 +41,9 @@ app.post("/reg", (req: Request, res: Response) => {
   regFunc(req, res);
 });
 
-import { yandexSearch } from "./curl_test/curl";
-
-app.get("/yandex", (req: Request, res: Response) => {
-  yandexSearch(req, res, "ssl");
+app.get("/parse", async (req: Request, res: Response) => {
+  let data = await Parse("data")
+  res.send(data)
 });
 
 app.listen(80);
